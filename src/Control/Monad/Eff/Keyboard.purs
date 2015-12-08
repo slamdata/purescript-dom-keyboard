@@ -1,9 +1,12 @@
 {-
 Copyright 2015 SlamData, Inc.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,19 +20,21 @@ import Prelude
 
 import Control.Apply ((<*))
 import Control.Bind ((<=<))
-import Control.Monad.Eff
+import Control.Monad.Eff (Eff())
+import Control.Monad.Eff.Exception (EXCEPTION(), error, throwException)
 import Control.Monad.Eff.Ref (REF(), newRef, modifyRef, readRef, writeRef)
+
+import Data.Either (either)
+import Data.Foreign (toForeign)
+import Data.Foreign.Class (readProp)
+import Data.Key (Key(..), NormalKey(), normalize)
+import Data.Set (Set(), empty, insert)
+
 import DOM as DOM
 import DOM.Event.Event as DOM
 import DOM.Event.EventTarget as DOM
 import DOM.Event.EventTypes as DOM
 import DOM.Event.Types as DOM
-import Data.Foreign (toForeign)
-import Data.Foreign.Class (readProp)
-import Data.Key
-import Data.Either (either)
-import Data.Set (Set(), empty, insert)
-import Control.Monad.Eff.Exception (EXCEPTION(), error, throwException)
 
 type KeyboardListeners eff = { keydown :: DOM.EventListener eff, keyup :: DOM.EventListener eff }
 
@@ -40,16 +45,12 @@ type KeyboardEffects eff = (ref :: REF, err :: EXCEPTION,  dom :: DOM.DOM | eff)
 -- | the event listeners. These can be used to undo any keyboard combination
 -- | bindings created using this function.
 -- |
--- | Relies on DOM Level 3 KeyboardEvent key Values, more information is
--- | available here http://www.w3.org/TR/DOM-Level-3-Events-key/.
+-- | Relies on [DOM Level 3 `KeyboardEvent.key` values](http://www.w3.org/TR/DOM-Level-3-Events-key/),
+-- | if your target browser does not support these then consider using a
+-- | polyfill such as the one provided by [`js-polyfills`](https://github.com/inexorabletash/polyfill/blob/master/keyboard.md).
 -- |
--- | If DOM Level 3 KeyboardEvent key Values aren't available in your target
--- | browser then please bower install and add script tags for the following
--- | polyfill.
--- | https://github.com/inexorabletash/polyfill/blob/master/keyboard.md
--- |
--- | It is preferable to avoid "Alt" as this changes the input characters
--- | on some platforms.
+-- | It is recommended that "Alt" is avoided as this changes the input
+-- | characters on some platforms.
 
 onKeyCombination :: forall eff. DOM.EventTarget -> ((Set NormalKey) -> Eff (KeyboardEffects eff) Unit) -> Set NormalKey -> Eff (KeyboardEffects eff) (KeyboardListeners (KeyboardEffects eff))
 onKeyCombination target callback expectedCombination = do
@@ -76,4 +77,3 @@ onKeyCombination target callback expectedCombination = do
     if combination == expectedCombination
       then callback combination <* DOM.preventDefault e
       else pure unit
-

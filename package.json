@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "postinstall": "pulp dep install",
+    "build-example": "pulp dep link && cd example && pulp dep link purescript-dom-keyboard && pulp dep install && pulp build",
+    "build": "pulp build"
+  },
+  "devDependencies": {
+    "pulp": "^5.0.2",
+    "purescript": "^0.7.6"
+  }
+}

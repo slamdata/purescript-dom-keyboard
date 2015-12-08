@@ -1,5 +1,5 @@
 {
-  "name": "purescript-browser-keyboard",
+  "name": "purescript-dom-keyboard",
   "moduleType": [
     "node"
   ],
@@ -18,8 +18,5 @@
     "purescript-refs": "~0.2.0",
     "purescript-sets": "~0.5.3",
     "purescript-strings": "~0.7.1"
-  },
-  "devDependencies": {
-    "purescript-console": "^0.1.0"
   }
 }
