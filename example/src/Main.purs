@@ -46,10 +46,14 @@ main = do
   -- Retreive an `EventTarget` using purescript-dom
   doc <- map (htmlDocumentToDocument >>> documentToEventTarget) (window >>= document)
 
+  -- Bind your actions to key combinations, making a reference to the returned
+  -- event listeners if you wish to unbind later.
   onKeyCombination doc (printCombinationApple >>> log) combination1
   listeners <- onKeyCombination doc (\_ -> log "This won't be logged") combination2
 
+  -- Unbind event listeners when you are done with them.
   removeEventListener keydown listeners.keydown false doc
   removeEventListener keyup listeners.keyup false doc
 
   pure unit
+
