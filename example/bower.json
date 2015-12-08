@@ -1,0 +1,8 @@
+{
+  "name": "example",
+  "private": true,
+  "dependencies": {
+    "purescript-dom-keyboard": "*",
+    "purescript-console": "~0.1.1"
+  }
+}
