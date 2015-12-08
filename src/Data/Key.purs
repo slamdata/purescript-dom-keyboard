@@ -50,20 +50,20 @@ printApple (NormalKey "Home") = fromChar $ fromCharCode 8598
 printApple (NormalKey "End") = fromChar $ fromCharCode 8600
 printApple (NormalKey s) = s
 
-seperator :: String
-seperator = "+"
+separator :: String
+separator = "+"
 
-seperatorApple :: String
-seperatorApple = ""
+separatorApple :: String
+separatorApple = ""
 
 printCombination' :: String -> (NormalKey -> String) -> Set NormalKey -> String
 printCombination' s f = toList >>> map f >>> intercalate s
 
 printCombination :: Set NormalKey -> String
-printCombination = printCombination' seperator print
+printCombination = printCombination' separator print
 
 printCombinationApple :: Set NormalKey -> String
-printCombinationApple = printCombination' seperatorApple printApple
+printCombinationApple = printCombination' separatorApple printApple
 
 normalize :: Key -> NormalKey
 normalize (Key s) | length s == 1 = NormalKey $ toUpper s

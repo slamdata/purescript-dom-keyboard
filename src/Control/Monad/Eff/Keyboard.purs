@@ -20,6 +20,7 @@ import Control.Bind ((<=<))
 import Control.Monad.Eff
 import Control.Monad.Eff.Ref (REF(), newRef, modifyRef, readRef, writeRef)
 import DOM as DOM
+import DOM.Event.Event as DOM
 import DOM.Event.EventTarget as DOM
 import DOM.Event.EventTypes as DOM
 import DOM.Event.Types as DOM
@@ -29,8 +30,6 @@ import Data.Key
 import Data.Either (either)
 import Data.Set (Set(), empty, insert)
 import Control.Monad.Eff.Exception (EXCEPTION(), error, throwException)
-
-foreign import preventDefault :: forall eff. DOM.Event -> Eff (dom :: DOM.DOM | eff) Unit
 
 type KeyboardListeners eff = { keydown :: DOM.EventListener eff, keyup :: DOM.EventListener eff }
 
@@ -44,7 +43,7 @@ type KeyboardEffects eff = (ref :: REF, err :: EXCEPTION,  dom :: DOM.DOM | eff)
 -- | Relies on DOM Level 3 KeyboardEvent key Values, more information is
 -- | available here http://www.w3.org/TR/DOM-Level-3-Events-key/.
 -- |
--- | If DOM Level 4 KeyboardEvent key Values aren't available in your target
+-- | If DOM Level 3 KeyboardEvent key Values aren't available in your target
 -- | browser then please bower install and add script tags for the following
 -- | polyfill.
 -- | https://github.com/inexorabletash/polyfill/blob/master/keyboard.md
@@ -75,6 +74,6 @@ onKeyCombination target callback expectedCombination = do
 
   callbackIfExpected e combination =
     if combination == expectedCombination
-      then callback combination <* preventDefault e
+      then callback combination <* DOM.preventDefault e
       else pure unit
 
