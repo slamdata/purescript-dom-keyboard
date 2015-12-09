@@ -24,7 +24,7 @@ import Control.Monad.Eff.Exception (EXCEPTION())
 import Control.Monad.Eff.Keyboard (onKeyCombination)
 import Control.Monad.Eff.Ref (REF())
 
-import Data.Key (Key(..), NormalKey(), printCombinationApple, normalizeCombination)
+import Data.NormalKey (NormalKey(), printCombinationApple, normalizeCombination)
 import Data.Set (Set())
 
 import DOM (DOM())
@@ -36,10 +36,10 @@ import DOM.HTML.Window (document)
 import DOM.Node.Types (documentToEventTarget)
 
 combination1 :: Set NormalKey
-combination1 = normalizeCombination [Key "Alt", Key "Backspace"]
+combination1 = normalizeCombination ["Alt", "Backspace"]
 
 combination2 :: Set NormalKey
-combination2 = normalizeCombination [Key "Meta", Key "Shift", Key "A"]
+combination2 = normalizeCombination ["Meta", "Shift", "A"]
 
 main :: Eff (console :: CONSOLE, ref :: REF, dom :: DOM, err :: EXCEPTION) Unit
 main = do
