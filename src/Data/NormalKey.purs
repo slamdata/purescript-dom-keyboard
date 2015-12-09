@@ -80,26 +80,37 @@ toApple key = key
 combinationToApple :: Set NormalKey -> Set NormalKey
 combinationToApple = toList >>> map toApple >>> fromList
 
+data NormalKeyView = Modifier Int | Other String | Enter
+
+toView :: NormalKey -> NormalKeyView
+toView (NormalKey "Control") = Modifier 0
+toView (NormalKey "Meta") = Modifier 1
+toView (NormalKey "Alt") = Modifier 2
+toView (NormalKey "Shift") = Modifier 3
+toView (NormalKey "Enter") = Enter
+toView (NormalKey s) = Other s
+
 instance eqNormalKey :: Eq NormalKey where
   eq (NormalKey x) (NormalKey y) = eq x y
 
+instance eqNormalKeyView :: Eq NormalKeyView where
+  eq (Modifier x) (Modifier y) = eq x y
+  eq (Other x) (Other y) = eq x y
+  eq Enter Enter = true
+  eq _ _ = false
+
+instance ordNormalKeyView :: Ord NormalKeyView where
+  compare (Modifier x) (Modifier y) = compare x y
+  compare (Modifier _) _ = GT
+  compare _ (Modifier _) = LT
+  compare (Other x) (Other y) = compare x y
+  compare Enter Enter = EQ
+  compare Enter _ = LT
+  compare _ Enter = GT
+
 instance ordNormalKey :: Ord NormalKey where
-  compare (NormalKey "Control") (NormalKey "Control") = EQ
-  compare (NormalKey "Control") _ = LT
-  compare _ (NormalKey "Control") = GT
-  compare (NormalKey "Meta") (NormalKey "Meta") = EQ
-  compare (NormalKey "Meta") _ = LT
-  compare _ (NormalKey "Meta") = GT
-  compare (NormalKey "Alt") (NormalKey "Alt") = EQ
-  compare (NormalKey "Alt") _ = LT
-  compare _ (NormalKey "Alt") = GT
-  compare (NormalKey "Shift") (NormalKey "Shift") = EQ
-  compare (NormalKey "Shift") _ = LT
-  compare _ (NormalKey "Shift") = GT
-  compare (NormalKey "Enter") (NormalKey "Enter") = EQ
-  compare _ (NormalKey "Enter") = GT
-  compare (NormalKey "Enter") _ = LT
-  compare (NormalKey x) (NormalKey y) = compare x y
+  compare x y = compare (toView x) (toView y)
 
 instance showNormalKey :: Show NormalKey where
   show (NormalKey s) = "(NormalKey " ++ show s ++ ")"
+
