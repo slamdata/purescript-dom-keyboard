@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -}
 
-module Data.Key
-  ( Key(..)
-  , NormalKey()
+module Data.NormalKey
+  ( NormalKey()
   , print
   , printApple
   , printCombination
@@ -34,7 +33,6 @@ import Data.Foldable (intercalate, foldMap)
 import Data.Set (Set(), fromList, toList, singleton)
 import Data.String (fromChar, length, toUpper)
 
-newtype Key = Key String
 newtype NormalKey = NormalKey String
 
 print :: NormalKey -> String
@@ -68,11 +66,11 @@ printCombination = printCombination' separator print
 printCombinationApple :: Set NormalKey -> String
 printCombinationApple = printCombination' separatorApple printApple
 
-normalize :: Key -> NormalKey
-normalize (Key s) | length s == 1 = NormalKey $ toUpper s
-normalize (Key s) = NormalKey s
+normalize :: String -> NormalKey
+normalize s | length s == 1 = NormalKey $ toUpper s
+normalize s = NormalKey s
 
-normalizeCombination :: Array Key -> Set NormalKey
+normalizeCombination :: Array String -> Set NormalKey
 normalizeCombination = foldMap (normalize >>> singleton)
 
 toApple :: NormalKey -> NormalKey
@@ -82,15 +80,13 @@ toApple key = key
 combinationToApple :: Set NormalKey -> Set NormalKey
 combinationToApple = toList >>> map toApple >>> fromList
 
-instance showKey :: Show Key where
-  show (Key s) = "(Key " ++ show s ++ ")"
-
 instance eqNormalKey :: Eq NormalKey where
   eq (NormalKey x) (NormalKey y) = eq x y
 
 instance ordNormalKey :: Ord NormalKey where
   compare (NormalKey "Control") (NormalKey "Control") = EQ
   compare (NormalKey "Control") _ = LT
+  compare _ (NormalKey "Control") = GT
   compare (NormalKey "Meta") (NormalKey "Meta") = EQ
   compare (NormalKey "Meta") _ = LT
   compare _ (NormalKey "Meta") = GT
@@ -101,6 +97,8 @@ instance ordNormalKey :: Ord NormalKey where
   compare (NormalKey "Shift") _ = LT
   compare _ (NormalKey "Shift") = GT
   compare (NormalKey "Enter") (NormalKey "Enter") = EQ
+  compare _ (NormalKey "Enter") = GT
+  compare (NormalKey "Enter") _ = LT
   compare (NormalKey x) (NormalKey y) = compare x y
 
 instance showNormalKey :: Show NormalKey where

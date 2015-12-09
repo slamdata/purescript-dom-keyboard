@@ -27,7 +27,7 @@ import Control.Monad.Eff.Ref (REF(), newRef, modifyRef, readRef, writeRef)
 import Data.Either (either)
 import Data.Foreign (toForeign)
 import Data.Foreign.Class (readProp)
-import Data.Key (Key(..), NormalKey(), normalize)
+import Data.NormalKey (NormalKey(), normalize)
 import Data.Set (Set(), empty, insert)
 
 import DOM as DOM
@@ -63,7 +63,7 @@ onKeyCombination target callback expectedCombination = do
   pure { keydown: insertListener, keyup: clearListener }
 
   where
-  pluckNormalKey = pure <<< normalize <<< Key <=< readProp "key" <<< toForeign
+  pluckNormalKey = pure <<< normalize <=< readProp "key" <<< toForeign
 
   refInsert ref = const (readRef ref) <=< modifyRef ref <<< insert
 
