@@ -94,10 +94,7 @@ instance eqNormalKey :: Eq NormalKey where
   eq (NormalKey x) (NormalKey y) = eq x y
 
 instance eqNormalKeyView :: Eq NormalKeyView where
-  eq (Modifier x) (Modifier y) = eq x y
-  eq (Other x) (Other y) = eq x y
-  eq Enter Enter = true
-  eq _ _ = false
+  eq x y = compare x y == EQ
 
 instance ordNormalKeyView :: Ord NormalKeyView where
   compare (Modifier x) (Modifier y) = compare x y
