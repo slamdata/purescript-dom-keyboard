@@ -101,12 +101,12 @@ instance eqNormalKeyView :: Eq NormalKeyView where
 
 instance ordNormalKeyView :: Ord NormalKeyView where
   compare (Modifier x) (Modifier y) = compare x y
-  compare (Modifier _) _ = GT
-  compare _ (Modifier _) = LT
+  compare (Modifier _) _ = LT
+  compare _ (Modifier _) = GT
   compare (Other x) (Other y) = compare x y
   compare Enter Enter = EQ
-  compare Enter _ = LT
-  compare _ Enter = GT
+  compare Enter _ = GT
+  compare _ Enter = LT
 
 instance ordNormalKey :: Ord NormalKey where
   compare x y = compare (toView x) (toView y)
