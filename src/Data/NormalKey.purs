@@ -74,7 +74,7 @@ normalizeCombination :: Array String -> Set NormalKey
 normalizeCombination = foldMap (normalize >>> singleton)
 
 toApple :: NormalKey -> NormalKey
-toApple (NormalKey "Ctrl") = NormalKey "Meta"
+toApple (NormalKey "Control") = NormalKey "Meta"
 toApple key = key
 
 combinationToApple :: Set NormalKey -> Set NormalKey
