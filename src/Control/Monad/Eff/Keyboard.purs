@@ -17,18 +17,13 @@ limitations under the License.
 module Control.Monad.Eff.Keyboard where
 
 import Prelude
-
-import Control.Apply ((<*))
-import Control.Bind ((<=<))
+import Control.Apply ((*>))
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Exception (EXCEPTION(), error, throwException)
-import Control.Monad.Eff.Ref (REF(), newRef, modifyRef, readRef, writeRef)
 
 import Data.Either (either)
-import Data.Foreign (toForeign)
-import Data.Foreign.Class (readProp)
-import Data.NormalKey (NormalKey(), normalize)
-import Data.Set (Set(), empty, insert)
+import Data.KeyboardEvent (eqKeyboardEvent, readKeyboardEvent)
+import Data.KeyCombination (KeyCombination(), toKeyboardEvent)
 
 import DOM as DOM
 import DOM.Event.Event as DOM
@@ -36,44 +31,31 @@ import DOM.Event.EventTarget as DOM
 import DOM.Event.EventTypes as DOM
 import DOM.Event.Types as DOM
 
-type KeyboardListeners eff = { keydown :: DOM.EventListener eff, keyup :: DOM.EventListener eff }
+type KeyboardEffects eff = (err :: EXCEPTION,  dom :: DOM.DOM | eff)
 
-type KeyboardEffects eff = (ref :: REF, err :: EXCEPTION,  dom :: DOM.DOM | eff)
-
--- | Calls the provided function when the specified key combination is
--- | depressed. Returns an eff with a return value of a record which contains
--- | the event listeners. These can be used to undo any keyboard combination
--- | bindings created using this function.
+-- | Performs the provided effect when the specified key combination is
+-- | depressed. Returns an eff with a return value of an event listener. This
+-- | can be used to undo any bindings created using this function.
 -- |
--- | Relies on [DOM Level 3 `KeyboardEvent.key` values](http://www.w3.org/TR/DOM-Level-3-Events-key/),
+-- | This function only supports combinations containing a single non-modifier
+-- | key. This is due to issues with the `Command` key on Apple platforms.
+-- |
+-- | Relies on [DOM Level 3 `KeyboardEvent.code` values](http://www.w3.org/TR/DOM-Level-3-Events-code/),
 -- | if your target browser does not support these then consider using a
 -- | polyfill such as the one provided by [`js-polyfills`](https://github.com/inexorabletash/polyfill/blob/master/keyboard.md).
--- |
--- | It is recommended that "Alt" is avoided as this changes the input
--- | characters on some platforms.
 
-onKeyCombination :: forall eff. DOM.EventTarget -> ((Set NormalKey) -> Eff (KeyboardEffects eff) Unit) -> Set NormalKey -> Eff (KeyboardEffects eff) (KeyboardListeners (KeyboardEffects eff))
-onKeyCombination target callback expectedCombination = do
-  currentCombination <- newRef empty
-  let clearCombination = writeRef currentCombination empty
-  let insertListener = DOM.eventListener $ insertKeyAndCallbackIfExpected currentCombination
-  let clearListener = DOM.eventListener $ const clearCombination
-  DOM.addEventListener DOM.keydown insertListener false target
-  DOM.addEventListener DOM.keyup clearListener false target
-  pure { keydown: insertListener, keyup: clearListener }
+onKeyCombination :: forall eff. DOM.EventTarget -> Eff (KeyboardEffects eff) Unit -> KeyCombination -> Eff (KeyboardEffects eff) (DOM.EventListener (KeyboardEffects eff))
+onKeyCombination target action expectedKeyCombination =
+  DOM.addEventListener DOM.keydown listener false target *> pure listener
 
   where
-  pluckNormalKey = pure <<< normalize <=< readProp "key" <<< toForeign
+  expectedKeyboardEvent = toKeyboardEvent expectedKeyCombination
+  errorMessage = "Couldn't read KeyboardEvent. Does your browser support DOM Level 3 KeyboardEvent code values?"
+  throw = const (throwException $ error errorMessage)
+  actIfExpected e keyboardEvent =
+    if keyboardEvent `eqKeyboardEvent` expectedKeyboardEvent
+       then DOM.preventDefault e *> action
+       else pure unit
+  readAndActIfExpected e = either throw (actIfExpected e) $ readKeyboardEvent e
+  listener = DOM.eventListener $ readAndActIfExpected
 
-  refInsert ref = const (readRef ref) <=< modifyRef ref <<< insert
-
-  insertKeyAndCallbackIfExpected ref e =
-    either
-      (const (throwException $ error "Couldn't read `key` property of KeyboardEvent."))
-      (callbackIfExpected e <=< refInsert ref)
-      (pluckNormalKey e)
-
-  callbackIfExpected e combination =
-    if combination == expectedCombination
-      then callback combination <* DOM.preventDefault e
-      else pure unit

@@ -19,41 +19,58 @@ module Main where
 import Prelude
 
 import Control.Monad.Eff (Eff())
-import Control.Monad.Eff.Console (CONSOLE(), log)
 import Control.Monad.Eff.Exception (EXCEPTION())
+import Control.Monad.Eff.KeyPlatform (keyPlatform)
 import Control.Monad.Eff.Keyboard (onKeyCombination)
-import Control.Monad.Eff.Ref (REF())
-
-import Data.NormalKey (NormalKey(), printCombinationApple, normalizeCombination)
-import Data.Set (Set())
-
 import DOM (DOM())
 import DOM.Event.EventTarget (removeEventListener)
-import DOM.Event.EventTypes (keyup, keydown)
+import DOM.Event.EventTypes (keydown)
 import DOM.HTML (window)
 import DOM.HTML.Types (htmlDocumentToDocument)
 import DOM.HTML.Window (document)
 import DOM.Node.Types (documentToEventTarget)
+import Data.KeyCombination (KeyCombination(), platformize, printPlatform)
+import Data.ModifierKey (ModifierKey(..))
+import Data.NonModifierKey (NonModifierKey(..))
+import Util (log, onLoad)
 
-combination1 :: Set NormalKey
-combination1 = normalizeCombination ["Alt", "Backspace"]
+helloCombination :: KeyCombination
+helloCombination = { modifiers: [Control, Shift, Alt], key: KeyB }
 
-combination2 :: Set NormalKey
-combination2 = normalizeCombination ["Meta", "Shift", "A"]
+howAreYouCombination :: KeyCombination
+howAreYouCombination = { modifiers: [Control], key: KeyP }
 
-main :: Eff (console :: CONSOLE, ref :: REF, dom :: DOM, err :: EXCEPTION) Unit
-main = do
+goodbyeCombination :: KeyCombination
+goodbyeCombination = { modifiers: [Control, Shift], key: KeyA }
+
+main :: Eff (dom :: DOM, err :: EXCEPTION) Unit
+main = onLoad \_ -> do
+  -- Find out what platform you are on
+  platform <- keyPlatform
+
+  -- Tailor your combinations to this platform
+  let platformizedHelloCombination = platformize platform helloCombination
+  let platformizedHowAreYouCombination = platformize platform howAreYouCombination
+  let platformizedGoodbyeCombination = platformize platform goodbyeCombination
+
   -- Retreive an `EventTarget` using purescript-dom
-  doc <- map (htmlDocumentToDocument >>> documentToEventTarget) (window >>= document)
+  target <- map (htmlDocumentToDocument >>> documentToEventTarget) (window >>= document)
 
-  -- Bind your actions to key combinations, making a reference to the returned
+  -- Bind your actions to key combinations, making references to the returned
   -- event listeners if you wish to unbind later.
-  onKeyCombination doc (printCombinationApple >>> log) combination1
-  listeners <- onKeyCombination doc (\_ -> log "This won't be logged") combination2
+  onKeyCombination target (log "Hello!") platformizedHelloCombination
+  onKeyCombination target (log "How are you?") platformizedHowAreYouCombination
+  listener <- onKeyCombination target (log "Goodbye!") platformizedGoodbyeCombination
 
   -- Unbind event listeners when you are done with them.
-  removeEventListener keydown listeners.keydown false doc
-  removeEventListener keyup listeners.keyup false doc
+  removeEventListener keydown listener false target
 
-  pure unit
+  -- Use strings to present your combinations as appropriate for the given platform
+  let helloCombinationString = printPlatform platform platformizedHelloCombination
+  let howAreYouCombinationString = printPlatform platform platformizedHowAreYouCombination
+  let goodbyeCombinationString = printPlatform platform platformizedGoodbyeCombination
+
+  log $ helloCombinationString ++ ": appends \"Hello!\"."
+  log $ howAreYouCombinationString ++ ": appends \"How are you?\"."
+  log $ goodbyeCombinationString ++ ": would append \"Goodbye!\" but it has been unbound."
 
