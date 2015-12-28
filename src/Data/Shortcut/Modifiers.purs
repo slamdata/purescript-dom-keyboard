@@ -1,0 +1,1 @@
+../../../generator/src/Data/Shortcut/Modifiers.purs

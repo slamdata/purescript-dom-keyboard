@@ -14,13 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -}
 
-module Data.Array.Contains where
+module Control.Monad.Eff.Shortcut.Platform where
 
 import Prelude
 
-import Data.Maybe (maybe)
-import Data.Array (elemIndex)
+import Control.Monad.Eff (Eff())
+import DOM (DOM())
+import DOM.HTML (window)
+import DOM.HTML.Navigator (platform)
+import DOM.HTML.Window (navigator)
+import Data.Shortcut.Platform (Platform(), parsePlatformString)
 
-contains :: forall a. (Eq a) => Array a -> a -> Boolean
-contains xs x = maybe false (const true) $ elemIndex x xs
+shortcutPlatform :: forall eff. Eff (dom :: DOM | eff) Platform
+shortcutPlatform = parsePlatformString <$> platformString
+
+platformString :: forall eff. Eff (dom :: DOM | eff) String
+platformString = window >>= navigator >>= platform
 

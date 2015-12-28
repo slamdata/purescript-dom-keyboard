@@ -14,24 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -}
 
-module Data.KeyPlatform (KeyPlatform(..), parsePlatformString) where
+module Data.Shortcut.Platform (Platform(..), parsePlatformString) where
 
 import Prelude
 import Data.String (take)
 
-data KeyPlatform = Apple | Other
+data Platform = Apple | Other
 
-instance eqPlatform :: Eq KeyPlatform where
+instance eqPlatform :: Eq Platform where
   eq Apple Apple = true
   eq Other Other = true
   eq _ _ = false
 
-parsePlatformString :: String -> KeyPlatform
+parsePlatformString :: String -> Platform
 parsePlatformString = take 3 >>> parsePlatformStringFirstThree
 
-parsePlatformStringFirstThree :: String -> KeyPlatform
+parsePlatformStringFirstThree :: String -> Platform
 parsePlatformStringFirstThree "Mac" = Apple
 parsePlatformStringFirstThree "iPa" = Apple
 parsePlatformStringFirstThree "iPh" = Apple
 parsePlatformStringFirstThree "iPo" = Apple
 parsePlatformStringFirstThree _ = Other
+
