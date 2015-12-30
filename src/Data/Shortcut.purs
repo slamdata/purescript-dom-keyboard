@@ -258,7 +258,6 @@ module Data.Shortcut
   , altShiftModBackspace
   ) where
 
-
 import Prelude hiding (zero, one)
 import Data.KeyboardEvent (KeyboardEvent())
 import Data.Shortcut.Modifiers (KeyModifiers(..), CodeModifiers(..), printKeyModifiers, printCodeModifiers, matchKeyModifiers, matchCodeModifiers, separator)
@@ -280,13 +279,11 @@ print platform (KeyShortcut key modifiers) =
 print platform (CodeShortcut code modifiers) =
   printCodeModifiers platform modifiers ++ separator platform ++ printKey platform code
 
-
 a :: Shortcut
 a = KeyShortcut "a" KeyNone
 
 modA :: Shortcut
 modA = KeyShortcut "a" KeyMod
-
 
 b :: Shortcut
 b = KeyShortcut "b" KeyNone
@@ -294,13 +291,11 @@ b = KeyShortcut "b" KeyNone
 modB :: Shortcut
 modB = KeyShortcut "b" KeyMod
 
-
 c :: Shortcut
 c = KeyShortcut "c" KeyNone
 
 modC :: Shortcut
 modC = KeyShortcut "c" KeyMod
-
 
 d :: Shortcut
 d = KeyShortcut "d" KeyNone
@@ -308,13 +303,11 @@ d = KeyShortcut "d" KeyNone
 modD :: Shortcut
 modD = KeyShortcut "d" KeyMod
 
-
 e :: Shortcut
 e = KeyShortcut "e" KeyNone
 
 modE :: Shortcut
 modE = KeyShortcut "e" KeyMod
-
 
 f :: Shortcut
 f = KeyShortcut "f" KeyNone
@@ -322,13 +315,11 @@ f = KeyShortcut "f" KeyNone
 modF :: Shortcut
 modF = KeyShortcut "f" KeyMod
 
-
 g :: Shortcut
 g = KeyShortcut "g" KeyNone
 
 modG :: Shortcut
 modG = KeyShortcut "g" KeyMod
-
 
 h :: Shortcut
 h = KeyShortcut "h" KeyNone
@@ -336,13 +327,11 @@ h = KeyShortcut "h" KeyNone
 modH :: Shortcut
 modH = KeyShortcut "h" KeyMod
 
-
 i :: Shortcut
 i = KeyShortcut "i" KeyNone
 
 modI :: Shortcut
 modI = KeyShortcut "i" KeyMod
-
 
 j :: Shortcut
 j = KeyShortcut "j" KeyNone
@@ -350,13 +339,11 @@ j = KeyShortcut "j" KeyNone
 modJ :: Shortcut
 modJ = KeyShortcut "j" KeyMod
 
-
 k :: Shortcut
 k = KeyShortcut "k" KeyNone
 
 modK :: Shortcut
 modK = KeyShortcut "k" KeyMod
-
 
 l :: Shortcut
 l = KeyShortcut "l" KeyNone
@@ -364,10 +351,8 @@ l = KeyShortcut "l" KeyNone
 modL :: Shortcut
 modL = KeyShortcut "l" KeyMod
 
-
 m :: Shortcut
 m = KeyShortcut "m" KeyNone
-
 
 n :: Shortcut
 n = KeyShortcut "n" KeyNone
@@ -375,13 +360,11 @@ n = KeyShortcut "n" KeyNone
 modN :: Shortcut
 modN = KeyShortcut "n" KeyMod
 
-
 o :: Shortcut
 o = KeyShortcut "o" KeyNone
 
 modO :: Shortcut
 modO = KeyShortcut "o" KeyMod
-
 
 p :: Shortcut
 p = KeyShortcut "p" KeyNone
@@ -389,10 +372,8 @@ p = KeyShortcut "p" KeyNone
 modP :: Shortcut
 modP = KeyShortcut "p" KeyMod
 
-
 q :: Shortcut
 q = KeyShortcut "q" KeyNone
-
 
 r :: Shortcut
 r = KeyShortcut "r" KeyNone
@@ -400,13 +381,11 @@ r = KeyShortcut "r" KeyNone
 modR :: Shortcut
 modR = KeyShortcut "r" KeyMod
 
-
 s :: Shortcut
 s = KeyShortcut "s" KeyNone
 
 modS :: Shortcut
 modS = KeyShortcut "s" KeyMod
-
 
 t :: Shortcut
 t = KeyShortcut "t" KeyNone
@@ -414,13 +393,11 @@ t = KeyShortcut "t" KeyNone
 modT :: Shortcut
 modT = KeyShortcut "t" KeyMod
 
-
 u :: Shortcut
 u = KeyShortcut "u" KeyNone
 
 modU :: Shortcut
 modU = KeyShortcut "u" KeyMod
-
 
 v :: Shortcut
 v = KeyShortcut "v" KeyNone
@@ -428,10 +405,8 @@ v = KeyShortcut "v" KeyNone
 modV :: Shortcut
 modV = KeyShortcut "v" KeyMod
 
-
 w :: Shortcut
 w = KeyShortcut "w" KeyNone
-
 
 x :: Shortcut
 x = KeyShortcut "x" KeyNone
@@ -439,13 +414,11 @@ x = KeyShortcut "x" KeyNone
 modX :: Shortcut
 modX = KeyShortcut "x" KeyMod
 
-
 y :: Shortcut
 y = KeyShortcut "y" KeyNone
 
 modY :: Shortcut
 modY = KeyShortcut "y" KeyMod
-
 
 z :: Shortcut
 z = KeyShortcut "z" KeyNone
@@ -453,13 +426,11 @@ z = KeyShortcut "z" KeyNone
 modZ :: Shortcut
 modZ = KeyShortcut "z" KeyMod
 
-
 semicolon :: Shortcut
 semicolon = KeyShortcut ";" KeyNone
 
 modSemicolon :: Shortcut
 modSemicolon = KeyShortcut ";" KeyMod
-
 
 colon :: Shortcut
 colon = KeyShortcut ":" KeyNone
@@ -467,13 +438,11 @@ colon = KeyShortcut ":" KeyNone
 modColon :: Shortcut
 modColon = KeyShortcut ":" KeyMod
 
-
 backtick :: Shortcut
 backtick = KeyShortcut "`" KeyNone
 
 modBacktick :: Shortcut
 modBacktick = KeyShortcut "`" KeyMod
-
 
 plus :: Shortcut
 plus = KeyShortcut "+" KeyNone
@@ -481,13 +450,11 @@ plus = KeyShortcut "+" KeyNone
 modPlus :: Shortcut
 modPlus = KeyShortcut "+" KeyMod
 
-
 minus :: Shortcut
 minus = KeyShortcut "-" KeyNone
 
 modMinus :: Shortcut
 modMinus = KeyShortcut "-" KeyMod
-
 
 equals :: Shortcut
 equals = KeyShortcut "=" KeyNone
@@ -495,13 +462,11 @@ equals = KeyShortcut "=" KeyNone
 modEquals :: Shortcut
 modEquals = KeyShortcut "=" KeyMod
 
-
 underscore :: Shortcut
 underscore = KeyShortcut "_" KeyNone
 
 modUnderscore :: Shortcut
 modUnderscore = KeyShortcut "_" KeyMod
-
 
 leftBracket :: Shortcut
 leftBracket = KeyShortcut "[" KeyNone
@@ -509,13 +474,11 @@ leftBracket = KeyShortcut "[" KeyNone
 modLeftBracket :: Shortcut
 modLeftBracket = KeyShortcut "[" KeyMod
 
-
 rightBracket :: Shortcut
 rightBracket = KeyShortcut "]" KeyNone
 
 modRightBracket :: Shortcut
 modRightBracket = KeyShortcut "]" KeyMod
-
 
 leftCurlyBrace :: Shortcut
 leftCurlyBrace = KeyShortcut "{" KeyNone
@@ -523,13 +486,11 @@ leftCurlyBrace = KeyShortcut "{" KeyNone
 modLeftCurlyBrace :: Shortcut
 modLeftCurlyBrace = KeyShortcut "{" KeyMod
 
-
 rightCurlyBrace :: Shortcut
 rightCurlyBrace = KeyShortcut "}" KeyNone
 
 modRightCurlyBrace :: Shortcut
 modRightCurlyBrace = KeyShortcut "}" KeyMod
-
 
 forwardSlash :: Shortcut
 forwardSlash = KeyShortcut "/" KeyNone
@@ -537,13 +498,11 @@ forwardSlash = KeyShortcut "/" KeyNone
 modForwardSlash :: Shortcut
 modForwardSlash = KeyShortcut "/" KeyMod
 
-
 backSlash :: Shortcut
 backSlash = KeyShortcut "\\" KeyNone
 
 modBackSlash :: Shortcut
 modBackSlash = KeyShortcut "\\" KeyMod
-
 
 period :: Shortcut
 period = KeyShortcut "." KeyNone
@@ -551,13 +510,11 @@ period = KeyShortcut "." KeyNone
 modPeriod :: Shortcut
 modPeriod = KeyShortcut "." KeyMod
 
-
 comma :: Shortcut
 comma = KeyShortcut "," KeyNone
 
 modComma :: Shortcut
 modComma = KeyShortcut "," KeyMod
-
 
 zero :: Shortcut
 zero = CodeShortcut "Digit0" None
@@ -583,7 +540,6 @@ shiftModZero = CodeShortcut "Digit0" ShiftMod
 altShiftModZero :: Shortcut
 altShiftModZero = CodeShortcut "Digit0" AltShiftMod
 
-
 one :: Shortcut
 one = CodeShortcut "Digit1" None
 
@@ -604,7 +560,6 @@ shiftModOne = CodeShortcut "Digit1" ShiftMod
 
 altShiftModOne :: Shortcut
 altShiftModOne = CodeShortcut "Digit1" AltShiftMod
-
 
 two :: Shortcut
 two = CodeShortcut "Digit2" None
@@ -627,7 +582,6 @@ shiftModTwo = CodeShortcut "Digit2" ShiftMod
 altShiftModTwo :: Shortcut
 altShiftModTwo = CodeShortcut "Digit2" AltShiftMod
 
-
 three :: Shortcut
 three = CodeShortcut "Digit3" None
 
@@ -646,7 +600,6 @@ altModThree = CodeShortcut "Digit3" AltMod
 altShiftModThree :: Shortcut
 altShiftModThree = CodeShortcut "Digit3" AltShiftMod
 
-
 four :: Shortcut
 four = CodeShortcut "Digit4" None
 
@@ -664,7 +617,6 @@ altModFour = CodeShortcut "Digit4" AltMod
 
 altShiftModFour :: Shortcut
 altShiftModFour = CodeShortcut "Digit4" AltShiftMod
-
 
 five :: Shortcut
 five = CodeShortcut "Digit5" None
@@ -687,7 +639,6 @@ shiftModFive = CodeShortcut "Digit5" ShiftMod
 altShiftModFive :: Shortcut
 altShiftModFive = CodeShortcut "Digit5" AltShiftMod
 
-
 six :: Shortcut
 six = CodeShortcut "Digit6" None
 
@@ -708,7 +659,6 @@ shiftModSix = CodeShortcut "Digit6" ShiftMod
 
 altShiftModSix :: Shortcut
 altShiftModSix = CodeShortcut "Digit6" AltShiftMod
-
 
 seven :: Shortcut
 seven = CodeShortcut "Digit7" None
@@ -731,7 +681,6 @@ shiftModSeven = CodeShortcut "Digit7" ShiftMod
 altShiftModSeven :: Shortcut
 altShiftModSeven = CodeShortcut "Digit7" AltShiftMod
 
-
 eight :: Shortcut
 eight = CodeShortcut "Digit8" None
 
@@ -752,7 +701,6 @@ shiftModEight = CodeShortcut "Digit8" ShiftMod
 
 altShiftModEight :: Shortcut
 altShiftModEight = CodeShortcut "Digit8" AltShiftMod
-
 
 nine :: Shortcut
 nine = CodeShortcut "Digit9" None
@@ -775,7 +723,6 @@ shiftModNine = CodeShortcut "Digit9" ShiftMod
 altShiftModNine :: Shortcut
 altShiftModNine = CodeShortcut "Digit9" AltShiftMod
 
-
 space :: Shortcut
 space = CodeShortcut "Space" None
 
@@ -794,7 +741,6 @@ shiftModSpace = CodeShortcut "Space" ShiftMod
 altShiftModSpace :: Shortcut
 altShiftModSpace = CodeShortcut "Space" AltShiftMod
 
-
 tab :: Shortcut
 tab = CodeShortcut "Tab" None
 
@@ -806,7 +752,6 @@ altModTab = CodeShortcut "Tab" AltMod
 
 altShiftModTab :: Shortcut
 altShiftModTab = CodeShortcut "Tab" AltShiftMod
-
 
 enter :: Shortcut
 enter = CodeShortcut "Enter" None
@@ -832,7 +777,6 @@ shiftModEnter = CodeShortcut "Enter" ShiftMod
 altShiftModEnter :: Shortcut
 altShiftModEnter = CodeShortcut "Enter" AltShiftMod
 
-
 home :: Shortcut
 home = CodeShortcut "Home" None
 
@@ -856,7 +800,6 @@ shiftModHome = CodeShortcut "Home" ShiftMod
 
 altShiftModHome :: Shortcut
 altShiftModHome = CodeShortcut "Home" AltShiftMod
-
 
 end :: Shortcut
 end = CodeShortcut "End" None
@@ -882,7 +825,6 @@ shiftModEnd = CodeShortcut "End" ShiftMod
 altShiftModEnd :: Shortcut
 altShiftModEnd = CodeShortcut "End" AltShiftMod
 
-
 pageDown :: Shortcut
 pageDown = CodeShortcut "PageDown" None
 
@@ -906,7 +848,6 @@ shiftModPageDown = CodeShortcut "PageDown" ShiftMod
 
 altShiftModPageDown :: Shortcut
 altShiftModPageDown = CodeShortcut "PageDown" AltShiftMod
-
 
 pageUp :: Shortcut
 pageUp = CodeShortcut "PageUp" None
@@ -932,7 +873,6 @@ shiftModPageUp = CodeShortcut "PageUp" ShiftMod
 altShiftModPageUp :: Shortcut
 altShiftModPageUp = CodeShortcut "PageUp" AltShiftMod
 
-
 up :: Shortcut
 up = CodeShortcut "ArrowUp" None
 
@@ -956,7 +896,6 @@ shiftModUp = CodeShortcut "ArrowUp" ShiftMod
 
 altShiftModUp :: Shortcut
 altShiftModUp = CodeShortcut "ArrowUp" AltShiftMod
-
 
 down :: Shortcut
 down = CodeShortcut "ArrowDown" None
@@ -982,7 +921,6 @@ shiftModDown = CodeShortcut "ArrowDown" ShiftMod
 altShiftModDown :: Shortcut
 altShiftModDown = CodeShortcut "ArrowDown" AltShiftMod
 
-
 left :: Shortcut
 left = CodeShortcut "ArrowLeft" None
 
@@ -1007,7 +945,6 @@ shiftModLeft = CodeShortcut "ArrowLeft" ShiftMod
 altShiftModLeft :: Shortcut
 altShiftModLeft = CodeShortcut "ArrowLeft" AltShiftMod
 
-
 right :: Shortcut
 right = CodeShortcut "ArrowRight" None
 
@@ -1031,7 +968,6 @@ shiftModRight = CodeShortcut "ArrowRight" ShiftMod
 
 altShiftModRight :: Shortcut
 altShiftModRight = CodeShortcut "ArrowRight" AltShiftMod
-
 
 backspace :: Shortcut
 backspace = CodeShortcut "Backspace" None

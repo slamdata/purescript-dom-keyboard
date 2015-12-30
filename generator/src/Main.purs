@@ -150,9 +150,9 @@ generateCodeShortcutDefinition sourceName code modifiers = generateDefinition na
 
 generateShortcuts :: ShortcutSource -> Array String
 generateShortcuts (KeyShortcutSource source) =
-  (generateKeyShortcutDefinition source.n source.k <$> source.m) ++ [""]
+  (generateKeyShortcutDefinition source.n source.k <$> source.m)
 generateShortcuts (CodeShortcutSource source) =
-  (generateCodeShortcutDefinition source.n source.c <$> source.m) ++ [""]
+  (generateCodeShortcutDefinition source.n source.c <$> source.m)
 
 generateNames :: ShortcutSource -> Array String
 generateNames (KeyShortcutSource source) = generateKeyShortcutName source.n <$> source.m
@@ -188,7 +188,7 @@ getPartial = readTextFile UTF8 "partial.purs"
 
 generateModule :: String -> String -> String
 generateModule licence partial =
-  licence ++ moduleHeader ++ generatedExports ++ "\n\n" ++ partial ++ "\n" ++ generatedDefinitions
+  licence ++ moduleHeader ++ generatedExports ++ "\n" ++ partial ++ generatedDefinitions ++ "\n"
 
 writeShortcutsModule :: forall eff. String -> Eff (fs :: FS, err :: EXCEPTION | eff) Unit
 writeShortcutsModule = writeTextFile UTF8 "../src/Data/Shortcut.purs"
