@@ -1,6 +1,6 @@
 # purescript-dom-keyboard
 
-A library for binding actions to and manipulating DOM keyboard shortcuts.
+A library for binding actions to and presenting DOM keyboard shortcuts.
 
 ## Shortcuts
 
