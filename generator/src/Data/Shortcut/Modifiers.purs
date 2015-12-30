@@ -34,7 +34,7 @@ printCMOther :: CodeModifiers -> String
 printCMOther None = ""
 printCMOther Alt = "Alt"
 printCMOther Shift = "Shift"
-printCMOther Mod = "Mod"
+printCMOther Mod = "Ctrl"
 printCMOther AltShift = joinWith (separator Other) $ printCMOther <$> [Alt, Shift]
 printCMOther AltMod = joinWith (separator Other) $ printCMOther <$> [Alt, Mod]
 printCMOther ShiftMod = joinWith (separator Other) $ printCMOther <$> [Shift, Mod]
