@@ -19,41 +19,51 @@ module Main where
 import Prelude
 
 import Control.Monad.Eff (Eff())
-import Control.Monad.Eff.Console (CONSOLE(), log)
 import Control.Monad.Eff.Exception (EXCEPTION())
-import Control.Monad.Eff.Keyboard (onKeyCombination)
-import Control.Monad.Eff.Ref (REF())
-
-import Data.NormalKey (NormalKey(), printCombinationApple, normalizeCombination)
-import Data.Set (Set())
-
+import Control.Monad.Eff.Shortcut.Platform (shortcutPlatform)
+import Control.Monad.Eff.Shortcut (onShortcut)
 import DOM (DOM())
 import DOM.Event.EventTarget (removeEventListener)
-import DOM.Event.EventTypes (keyup, keydown)
+import DOM.Event.EventTypes (keydown)
 import DOM.HTML (window)
 import DOM.HTML.Types (htmlDocumentToDocument)
 import DOM.HTML.Window (document)
 import DOM.Node.Types (documentToEventTarget)
+import Data.Shortcut (Shortcut(), print, modP, rightCurlyBrace, altShiftModBackspace)
+import Util (log, onLoad)
 
-combination1 :: Set NormalKey
-combination1 = normalizeCombination ["Alt", "Backspace"]
+helloShortcut :: Shortcut
+helloShortcut = modP
 
-combination2 :: Set NormalKey
-combination2 = normalizeCombination ["Meta", "Shift", "A"]
+howAreYouShortcut :: Shortcut
+howAreYouShortcut = rightCurlyBrace
 
-main :: Eff (console :: CONSOLE, ref :: REF, dom :: DOM, err :: EXCEPTION) Unit
-main = do
-  -- Retreive an `EventTarget` using purescript-dom
-  doc <- map (htmlDocumentToDocument >>> documentToEventTarget) (window >>= document)
+goodbyeShortcut :: Shortcut
+goodbyeShortcut = altShiftModBackspace
 
-  -- Bind your actions to key combinations, making a reference to the returned
+main :: Eff (dom :: DOM, err :: EXCEPTION) Unit
+main = onLoad \_ -> do
+  -- Find out the platform your program is running on.
+  platform <- shortcutPlatform
+
+  -- Retreive an `EventTarget` using purescript-dom.
+  target <- map (htmlDocumentToDocument >>> documentToEventTarget) (window >>= document)
+
+  -- Bind your actions to key shortcuts, making references to the returned
   -- event listeners if you wish to unbind later.
-  onKeyCombination doc (printCombinationApple >>> log) combination1
-  listeners <- onKeyCombination doc (\_ -> log "This won't be logged") combination2
+  onShortcut platform target (log "Hello!") helloShortcut
+  onShortcut platform target (log "Goodbye!") goodbyeShortcut
+  listener <- onShortcut platform target (log "How are you?") howAreYouShortcut
 
   -- Unbind event listeners when you are done with them.
-  removeEventListener keydown listeners.keydown false doc
-  removeEventListener keyup listeners.keyup false doc
+  removeEventListener keydown listener false target
 
-  pure unit
+  -- Use strings to present your shortcuts as appropriate for the given platform.
+  let helloShortcutString = print platform helloShortcut
+  let howAreYouShortcutString = print platform howAreYouShortcut
+  let goodbyeShortcutString = print platform goodbyeShortcut
+
+  log $ helloShortcutString ++ ": appends \"Hello!\"."
+  log $ howAreYouShortcutString ++ ": would append \"How are you?\" but it has been unbound."
+  log $ goodbyeShortcutString ++ ": appends \"Goodbye!\"."
 
