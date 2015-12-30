@@ -25,7 +25,6 @@ import Data.Foldable (foldMap)
 import Data.Shortcut.Modifiers (KeyModifiers(..), CodeModifiers(..))
 import Data.String (joinWith)
 import Data.String.Capitalize (capitalize)
-import Data.String.Multiline (multiline)
 import Node.Encoding (Encoding(..))
 
 data ShortcutSource
@@ -107,6 +106,9 @@ keyShortcuts =
     , { n: "period", k: ".", m: [KeyNone, KeyMod] }
     , { n: "comma", k: ",", m: [KeyNone, KeyMod] }
     ]
+
+multiline :: Array String -> String
+multiline = joinWith "\n"
 
 generateKeyShortcutName :: String -> KeyModifiers -> String
 generateKeyShortcutName name KeyNone = name
