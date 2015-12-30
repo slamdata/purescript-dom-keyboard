@@ -44,6 +44,6 @@ http://pursuit.purescript.org/packages/purescript-dom-keyboard
 To add or remove keyboard shortcuts please use
 [the provided program generator](generator/src/Main.purs).
 
-After altering the key or code shortcut sources use `pulp run` in the
-`generator` directory to update `src/Data/Shortcut.purs`.
+After altering the key or code shortcut sources use `pulp run --include ../src`
+in the `generator` directory to update `src/Data/Shortcut.purs`.
 
