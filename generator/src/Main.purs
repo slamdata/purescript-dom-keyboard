@@ -71,13 +71,13 @@ keyShortcuts =
     , { n: "e", k: "e", m: [KeyNone, KeyMod] }
     , { n: "f", k: "f", m: [KeyNone, KeyMod] }
     , { n: "g", k: "g", m: [KeyNone, KeyMod] }
-    , { n: "h", k: "h", m: [KeyNone, KeyMod] }
+    , { n: "h", k: "h", m: [KeyNone] }
     , { n: "i", k: "i", m: [KeyNone, KeyMod] }
     , { n: "j", k: "j", m: [KeyNone, KeyMod] }
     , { n: "k", k: "k", m: [KeyNone, KeyMod] }
-    , { n: "l", k: "l", m: [KeyNone, KeyMod] }
+    , { n: "l", k: "l", m: [KeyNone] }
     , { n: "m", k: "m", m: [KeyNone] }
-    , { n: "n", k: "n", m: [KeyNone, KeyMod] }
+    , { n: "n", k: "n", m: [KeyNone] }
     , { n: "o", k: "o", m: [KeyNone, KeyMod] }
     , { n: "p", k: "p", m: [KeyNone, KeyMod] }
     , { n: "q", k: "q", m: [KeyNone] }

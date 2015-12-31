@@ -33,7 +33,6 @@ module Data.Shortcut
   , g
   , modG
   , h
-  , modH
   , i
   , modI
   , j
@@ -41,10 +40,8 @@ module Data.Shortcut
   , k
   , modK
   , l
-  , modL
   , m
   , n
-  , modN
   , o
   , modO
   , p
@@ -324,9 +321,6 @@ modG = KeyShortcut "g" KeyMod
 h :: Shortcut
 h = KeyShortcut "h" KeyNone
 
-modH :: Shortcut
-modH = KeyShortcut "h" KeyMod
-
 i :: Shortcut
 i = KeyShortcut "i" KeyNone
 
@@ -348,17 +342,11 @@ modK = KeyShortcut "k" KeyMod
 l :: Shortcut
 l = KeyShortcut "l" KeyNone
 
-modL :: Shortcut
-modL = KeyShortcut "l" KeyMod
-
 m :: Shortcut
 m = KeyShortcut "m" KeyNone
 
 n :: Shortcut
 n = KeyShortcut "n" KeyNone
-
-modN :: Shortcut
-modN = KeyShortcut "n" KeyMod
 
 o :: Shortcut
 o = KeyShortcut "o" KeyNone
