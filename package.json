@@ -1,12 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "pulp dep install",
-    "build-example": "pulp dep link && cd example && pulp dep link purescript-dom-keyboard && pulp dep install && pulp build",
+    "postinstall": "bower install",
+    "build-example": "bower link && cd example && bower link purescript-dom-keyboard && bower install && pulp browserify --to app.js",
     "build": "pulp build"
   },
   "devDependencies": {
-    "pulp": "^5.0.2",
-    "purescript": "^0.7.6"
+    "pulp": "^10.0.0",
+    "purescript": "^0.10.2"
   }
 }

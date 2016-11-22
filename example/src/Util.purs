@@ -18,21 +18,19 @@ module Util (log, onLoad) where
 
 import Prelude
 
-import Control.Bind ((<=<), (=<<))
 import Control.Monad.Eff (Eff())
-import Control.Monad.Eff.Class (MonadEff, liftEff)
+import Control.Monad.Eff.Class (liftEff)
 import DOM (DOM())
 import DOM.Event.EventTarget (eventListener, addEventListener)
-import DOM.Event.EventTypes (load)
 import DOM.Event.Types (Event())
 import DOM.HTML (window)
+import DOM.HTML.Event.EventTypes (load)
 import DOM.HTML.Types (Window(), windowToEventTarget, htmlDocumentToParentNode, htmlDocumentToDocument)
 import DOM.HTML.Window (document)
 import DOM.Node.Document (createElement, createTextNode)
 import DOM.Node.Node (appendChild)
 import DOM.Node.ParentNode (querySelector)
-import DOM.Node.Types (Node(), Element())
-import DOM.Node.Types (textToNode, elementToNode)
+import DOM.Node.Types (Node(), Element(), textToNode, elementToNode)
 import Data.Maybe (maybe)
 import Data.Nullable (Nullable(), toMaybe)
 

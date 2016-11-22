@@ -10,12 +10,12 @@
     "output"
   ],
   "dependencies": {
-    "purescript-arrays": "~0.4.3",
-    "purescript-control": "~0.3.2",
-    "purescript-dom": "~0.2.11",
-    "purescript-exceptions": "~0.3.2",
-    "purescript-foreign": "~0.7.2",
-    "purescript-strings": "~0.7.1"
+    "purescript-arrays": "~3.0.1",
+    "purescript-control": "~2.0.0",
+    "purescript-dom": "~3.2.0",
+    "purescript-exceptions": "~2.0.0",
+    "purescript-foreign": "~3.0.1",
+    "purescript-strings": "~2.0.2"
   },
   "ignore": [ "example", "generator" ]
 }

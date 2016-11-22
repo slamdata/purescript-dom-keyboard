@@ -17,20 +17,18 @@ limitations under the License.
 module Control.Monad.Eff.Shortcut where
 
 import Prelude
-import Control.Apply ((*>))
-import Control.Monad.Eff (Eff())
-import Control.Monad.Eff.Exception (EXCEPTION(), error, throwException)
-
+import DOM as DOM
+import DOM.Event.Event as EDOM
+import DOM.Event.EventTarget as ETDOM
+import DOM.Event.Types as TDOM
+import DOM.HTML.Event.EventTypes as EETDOM
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Exception (EXCEPTION, error, throwException)
+import Control.Monad.Except (runExcept)
 import Data.Either (either)
 import Data.KeyboardEvent (readKeyboardEvent)
-import Data.Shortcut (Shortcut(), keyboardEventMatch)
-import Data.Shortcut.Platform (Platform())
-
-import DOM as DOM
-import DOM.Event.Event as DOM
-import DOM.Event.EventTarget as DOM
-import DOM.Event.EventTypes as DOM
-import DOM.Event.Types as DOM
+import Data.Shortcut (Shortcut, keyboardEventMatch)
+import Data.Shortcut.Platform (Platform)
 
 type ShortcutEffects eff = (err :: EXCEPTION,  dom :: DOM.DOM | eff)
 
@@ -46,17 +44,16 @@ type ShortcutEffects eff = (err :: EXCEPTION,  dom :: DOM.DOM | eff)
 -- | values. If your target browser does not support these then consider using a
 -- | polyfill such as the one provided by [`js-polyfills`](https://github.com/inexorabletash/polyfill/blob/master/keyboard.md).
 
-onShortcut :: forall eff. Platform -> DOM.EventTarget -> Eff (ShortcutEffects eff) Unit -> Shortcut -> Eff (ShortcutEffects eff) (DOM.EventListener (ShortcutEffects eff))
+onShortcut :: forall eff. Platform -> TDOM.EventTarget -> Eff (ShortcutEffects eff) Unit -> Shortcut -> Eff (ShortcutEffects eff) (ETDOM.EventListener (ShortcutEffects eff))
 onShortcut platform target action shortcut =
-  DOM.addEventListener DOM.keydown listener false target *> pure listener
+  ETDOM.addEventListener EETDOM.keydown listener false target *> pure listener
 
   where
   errorMessage = "Couldn't read KeyboardEvent. Does your browser support DOM Level 3 KeyboardEvents?"
   throw = const (throwException $ error errorMessage)
   actIfExpected e keyboardEvent =
     if keyboardEventMatch platform shortcut keyboardEvent
-       then DOM.preventDefault e *> action
+       then EDOM.preventDefault e *> action
        else pure unit
-  readAndActIfExpected e = either throw (actIfExpected e) $ readKeyboardEvent e
-  listener = DOM.eventListener $ readAndActIfExpected
-
+  readAndActIfExpected e = either throw (actIfExpected e) $ runExcept $ readKeyboardEvent e
+  listener = ETDOM.eventListener $ readAndActIfExpected
