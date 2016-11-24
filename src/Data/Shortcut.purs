@@ -272,9 +272,9 @@ keyboardEventMatch platform (CodeShortcut code modifiers) event =
 
 print :: Platform -> Shortcut -> String
 print platform (KeyShortcut key modifiers) =
-  printKeyModifiers platform modifiers ++ separator platform ++ printKey platform key
+  printKeyModifiers platform modifiers <> separator platform <> printKey platform key
 print platform (CodeShortcut code modifiers) =
-  printCodeModifiers platform modifiers ++ separator platform ++ printKey platform code
+  printCodeModifiers platform modifiers <> separator platform <> printKey platform code
 
 a :: Shortcut
 a = KeyShortcut "a" KeyNone

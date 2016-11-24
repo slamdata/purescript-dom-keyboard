@@ -20,7 +20,7 @@ import Prelude
 import Data.Char (fromCharCode)
 import Data.KeyboardEvent (KeyboardEvent())
 import Data.Shortcut.Platform (Platform(..))
-import Data.String (joinWith, fromChar)
+import Data.String (joinWith)
 
 data KeyModifiers = KeyNone | KeyMod
 
@@ -42,9 +42,9 @@ printCMOther AltShiftMod = joinWith (separator Other) $ printCMOther <$> [Alt, S
 
 printCMApple :: CodeModifiers -> String
 printCMApple None = ""
-printCMApple Alt = fromChar $ fromCharCode 8997
-printCMApple Shift = fromChar $ fromCharCode 8679
-printCMApple Mod = fromChar $ fromCharCode 8984
+printCMApple Alt = show $ fromCharCode 8997
+printCMApple Shift = show $ fromCharCode 8679
+printCMApple Mod = show $ fromCharCode 8984
 printCMApple AltShift = joinWith (separator Apple) $ printCMApple <$> [Alt, Shift]
 printCMApple AltMod = joinWith (separator Apple) $ printCMApple <$> [Alt, Mod]
 printCMApple ShiftMod = joinWith (separator Apple) $ printCMApple <$> [Shift, Mod]

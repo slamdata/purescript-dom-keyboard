@@ -24,8 +24,8 @@ import Control.Monad.Eff.Shortcut.Platform (shortcutPlatform)
 import Control.Monad.Eff.Shortcut (onShortcut)
 import DOM (DOM())
 import DOM.Event.EventTarget (removeEventListener)
-import DOM.Event.EventTypes (keydown)
 import DOM.HTML (window)
+import DOM.HTML.Event.EventTypes (keydown)
 import DOM.HTML.Types (htmlDocumentToDocument)
 import DOM.HTML.Window (document)
 import DOM.Node.Types (documentToEventTarget)
@@ -63,7 +63,7 @@ main = onLoad \_ -> do
   let howAreYouShortcutString = print platform howAreYouShortcut
   let goodbyeShortcutString = print platform goodbyeShortcut
 
-  log $ helloShortcutString ++ ": appends \"Hello!\"."
-  log $ howAreYouShortcutString ++ ": would append \"How are you?\" but it has been unbound."
-  log $ goodbyeShortcutString ++ ": appends \"Goodbye!\"."
+  log $ helloShortcutString <> ": appends \"Hello!\"."
+  log $ howAreYouShortcutString <> ": would append \"How are you?\" but it has been unbound."
+  log $ goodbyeShortcutString <> ": appends \"Goodbye!\"."
 
